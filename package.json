@@ -1,0 +1,10 @@
+{
+  "name": "fruity-cli",
+  "version": "0.0.1",
+  "description": "nrf serial command line",
+  "dependencies": {
+    "express": "^4.10.2",
+    "serialport": "^2.0.5",
+    "socket.io": "1.4.5"
+  }
+}
