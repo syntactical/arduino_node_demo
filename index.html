@@ -36,6 +36,8 @@
     socket.on('serial data', function(data){
       if (data == 1) {
           $('#messages').append($('<li>').text("Button Pressed"));
+      } else {
+          $('#messages').append($('<li>').text("Button Was Either Released or Unpressed, depending on your perspective on things."));
       }
     })
   </script>
