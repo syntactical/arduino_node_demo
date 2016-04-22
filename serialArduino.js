@@ -1,7 +1,29 @@
-var serialport = require('serialport');
+var serialport = require("serialport");
 var SerialPort = serialport.SerialPort;
 
-function openPort(portName, receiveCallback){
+exports.initiateCommunication = function(callback){
+  var name, portName;
+  var found = false;
+
+  serialport.list(function(err, ports){
+    for(var i = 0; i < ports.length; i++) {
+      port = ports[i];
+
+      if(port.manufacturer == 'Arduino (www.arduino.cc)') {
+        found++;
+        portName = port.comName;
+      }
+    }
+
+    if(found) {
+      openPort(portName, callback);
+    } else {
+      exitWithMessage('Cannot find Arduino port.  Is it connected?');
+    }
+  })
+};
+
+function openPort(portName, callback) {
   var arduinoPort = new SerialPort(portName, {
     baudrate: 9600,
     parser: serialport.parsers.readline('\n')
@@ -14,30 +36,8 @@ function openPort(portName, receiveCallback){
       log('Serial open');
 
       arduinoPort.on('data', function(data) {
-        receiveCallback(data);
+        callback(data);
       });
-    }
-  });
-}
-
-exports.findArduinoPortName = function(receiveCallback){
-  var name, port;
-  var found = 0;
-
-  serialport.list(function (err, ports) {
-    for(var i = 0; i < ports.length; i++) {
-      port = ports[i];
-
-      if(port.manufacturer == 'Arduino (www.arduino.cc)') {
-        found++;
-        name = port.comName;
-      }
-    }
-
-    if(found == 1) {
-      openPort(name, receiveCallback);
-    } else {
-      exitWithMessage('Cannot find Arduino port.  Is it connected?');
     }
   });
 }

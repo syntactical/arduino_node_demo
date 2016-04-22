@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "nrf serial command line",
   "dependencies": {
+    "bluebird": "^3.3.5",
     "express": "^4.10.2",
     "serialport": "^2.0.5",
     "socket.io": "1.4.5"

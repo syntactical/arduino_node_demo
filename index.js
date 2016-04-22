@@ -27,4 +27,4 @@ var receiveCallback = function(data){
 	io.emit('serial data', data);
 }
 
-serialArduino.findArduinoPortName(receiveCallback);
+serialArduino.initiateCommunication(receiveCallback);
