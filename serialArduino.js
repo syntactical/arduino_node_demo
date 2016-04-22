@@ -1,8 +1,7 @@
 var serialport = require("serialport");
-var SerialPort = serialport.SerialPort;
 
 exports.initiateCommunication = function(callback){
-  var name, portName;
+  var portName;
   var found = false;
 
   serialport.list(function(err, ports){
@@ -24,7 +23,7 @@ exports.initiateCommunication = function(callback){
 };
 
 function openPort(portName, callback) {
-  var arduinoPort = new SerialPort(portName, {
+  var arduinoPort = new serialport.SerialPort(portName, {
     baudrate: 9600,
     parser: serialport.parsers.readline('\n')
   }, false);
@@ -36,6 +35,7 @@ function openPort(portName, callback) {
       log('Serial open');
 
       arduinoPort.on('data', function(data) {
+        log(data);
         callback(data);
       });
     }
