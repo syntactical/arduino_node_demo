@@ -14,7 +14,9 @@
     </style>
   </head>
   <body>
-    <ul id="messages"></ul>
+    <div id="messages-container">
+      <ul id="messages"></ul>
+    </div>
   <script src="/socket.io/socket.io.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
   <script>
@@ -26,7 +28,13 @@
       } else {
           $('#messages').append($('<li>').text("Button Released"));
       }
-    })
+      scrollDown();
+    });
+
+    function scrollDown(){
+      $("html, body").animate({ scrollTop: $(document).height() }, 10);
+    }
+
   </script>
   </body>
 </html>
